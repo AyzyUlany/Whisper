@@ -1,6 +1,7 @@
 import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +13,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Animation gap;
   Animation base;
   Animation reverse;
+
   AnimationController controller;
+
 
     int amicalColor = 0xFFE4537A,
         romantiqueColor = 0x88DD2A7B,
@@ -29,14 +32,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(vsync: this, duration: Duration(seconds: 6));
-    base = CurvedAnimation(parent: controller, curve: Curves.easeOut);
+    controller = AnimationController(vsync: this, duration: Duration(seconds: 8));
+    base = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
     reverse = Tween<double>(begin: 0.0, end: -1.0).animate(base);
     gap = Tween<double>(begin: 3.0, end: 0.0).animate(base)
       ..addListener(() {
         setState(() {});
       });
-    controller.forward();
+
+    controller.repeat(reverse: true);
   }
 
   /// Dispose
@@ -48,6 +52,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     @override
     Widget build(BuildContext context) {
+
       return new Scaffold(
         appBar: new AppBar(
           title: RichText(
@@ -87,29 +92,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         turns: reverse,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: new Container( //AMICAL
-                            height: 100,
-                            width: 100,
-                            child: new TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  amicalColor = 0xFFE4537A;
-                                  romantiqueColor = 0x88DD2A7B;
-                                  sportifColor = 0x888134AF;
-                                  extremeColor = 0x88515BD4;
-                                  themeText = amicalText;
-                                  themeTitle = 'Amical';
-                                });
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    new Color(amicalColor)),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100.0),
-                                    )
-                                ),
+                          child: ScaleTap(
+                            onTap: () {
+                              setState(() {
+                                amicalColor = 0xFFE4537A;
+                                romantiqueColor = 0x88DD2A7B;
+                                sportifColor = 0x888134AF;
+                                extremeColor = 0x88515BD4;
+                                themeText = amicalText;
+                                themeTitle = 'Amical';
+                              });
+                            },
+                            scaleMinValue: 0.75,
+                            scaleCurve: Curves.easeInOut,
+                            child: new Container( //AMICAL
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(amicalColor),
                               ),
                             ),
                           ),
@@ -127,29 +128,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         turns: reverse,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: new Container( //ROMANTIQUE
-                            height: 100,
-                            width: 100,
-                            child: new TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  amicalColor = 0x88E4537A;
-                                  romantiqueColor = 0xFFDD2A7B;
-                                  sportifColor = 0x888134AF;
-                                  extremeColor = 0x88515BD4;
-                                  themeText = romantiqueText;
-                                  themeTitle = 'Romantique';
-                                });
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    new Color(romantiqueColor)),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100.0),
-                                    )
-                                ),
+                          child: ScaleTap(
+                            onTap: (){
+                              setState(() {
+                                amicalColor = 0x88E4537A;
+                                romantiqueColor = 0xFFDD2A7B;
+                                sportifColor = 0x888134AF;
+                                extremeColor = 0x88515BD4;
+                                themeText = romantiqueText;
+                                themeTitle = 'Romantique';
+                              });
+                            },
+                            scaleMinValue: 0.75,
+                            scaleCurve: Curves.easeInOut,
+                            child: new Container( //ROMANTIQUE
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(romantiqueColor),
                               ),
                             ),
                           ),
@@ -167,29 +164,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         turns: reverse,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: new Container( //SPORTIF
-                            height: 100,
-                            width: 100,
-                            child: new TextButton(
-                              onPressed: (){
-                                setState(() {
-                                  amicalColor = 0x88E4537A;
-                                  romantiqueColor = 0x88DD2A7B;
-                                  sportifColor = 0xFF8134AF;
-                                  extremeColor = 0x88515BD4;
-                                  themeText = sportifText;
-                                  themeTitle = 'Sportif';
-                                });
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  new Color(sportifColor)),
-                                shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                    )
-                                  ),
+                          child: ScaleTap(
+                            onTap: (){
+                              setState(() {
+                                amicalColor = 0x88E4537A;
+                                romantiqueColor = 0x88DD2A7B;
+                                sportifColor = 0xFF8134AF;
+                                extremeColor = 0x88515BD4;
+                                themeText = sportifText;
+                                themeTitle = 'Sportif';
+                              });
+                            },
+                            scaleMinValue: 0.75,
+                            scaleCurve: Curves.easeInOut,
+                            child: new Container( //SPORTIF
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(sportifColor),
                               ),
                             ),
                           ),
@@ -207,29 +200,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         turns: reverse,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: new Container( //EXTREME
-                            height: 100,
-                            width: 100,
-                            child: new TextButton(
-                              onPressed: (){
-                                setState(() {
-                                  amicalColor = 0x88E4537A;
-                                  romantiqueColor = 0x88DD2A7B;
-                                  sportifColor = 0x888134AF;
-                                  extremeColor = 0xFF515BD4;
-                                  themeText = extremeText;
-                                  themeTitle = 'Extrême';
-                                });
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    new Color(extremeColor)),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100.0),
-                                    )
-                                ),
+                          child: ScaleTap(
+                            onTap: (){
+                              setState(() {
+                                amicalColor = 0x88E4537A;
+                                romantiqueColor = 0x88DD2A7B;
+                                sportifColor = 0x888134AF;
+                                extremeColor = 0xFF515BD4;
+                                themeText = extremeText;
+                                themeTitle = 'Extrême';
+                              });
+                            },
+                            scaleMinValue: 0.75,
+                            scaleCurve: Curves.easeInOut,
+                            child: new Container( //EXTREME
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(extremeColor),
                               ),
                             ),
                           ),
@@ -285,54 +274,45 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               fontFamily: 'Lobster',
                               //fontWeight: FontWeight.bold,
                               fontSize: 40,
-                            ),)
+                            ),
+                          )
                       ),
                     ],
                   ),
                 ),
               ),
-              new Container(
-                height: 105.0,
-                width: 350.0,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
-                      stops: [
-                        0.01,
-                        0.2,
-                        0.5,
-                        0.9,
-                      ],
-                      colors: [
-                        Color(0xFFFEDA77),
-                        Color(0xFFDD2A7B),
-                        Color(0xFF8134AF),
-                        Color(0xFF515BD4)
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(45.0)
-                ),
-                  child: new TextButton(
-                      onPressed: () {
-
-                      },
-                    style: ButtonStyle(
-                      side: MaterialStateProperty.all(
-                          BorderSide(width: 0, color: Colors.grey)),
-                      shape: MaterialStateProperty.all<
-                          RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(45.0),
-                          )
+              ScaleTap(
+                onTap: () {},
+                child: new Container(
+                  height: 105.0,
+                  width: 350.0,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        stops: [
+                          0.01,
+                          0.2,
+                          0.5,
+                          0.9,
+                        ],
+                        colors: [
+                          Color(0xFFFEDA77),
+                          Color(0xFFDD2A7B),
+                          Color(0xFF8134AF),
+                          Color(0xFF515BD4)
+                        ],
                       ),
-                    ),
-                    child: new Text('JOUER',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Myriad Arabic',
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 76.0,
+                      borderRadius: BorderRadius.circular(45.0)
+                  ),
+                    child: Center(
+                      child: Text('JOUER',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Myriad Arabic',
+                          //fontWeight: FontWeight.bold,
+                          fontSize: 76.0,
+                        ),
                       ),
                     ),
                 ),
@@ -342,7 +322,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
       );
     }
-  }
 
-  void changeTheme() {
-    }
+
+  }
