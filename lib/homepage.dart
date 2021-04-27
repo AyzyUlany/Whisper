@@ -16,18 +16,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   AnimationController controller;
 
+  bool transparentText = false;
 
     int amicalColor = 0xFFE4537A,
         romantiqueColor = 0x88DD2A7B,
         sportifColor = 0x888134AF,
-        extremeColor = 0x88515BD4;
+        extremeColor = 0x88515BD4,
+        textColor = 0xFF000000;
+
 
     String amicalText = 'The price of freedom is eternal vigilance.',
            romantiqueText = 'It’s dangerous to go alone, take this!',
            sportifText = 'Wake me when you need me.',
            extremeText = "Space. Space. I'm in space. SPAAAAAAACE!",
            themeText = 'The price of freedom is eternal vigilance.',
-           themeTitle = 'Amical';
+           themeTitle = 'Amical',
+           themeTextToApply = 'The price of freedom is eternal vigilance.',
+           themeTitleToApply = 'Amical';
 
   @override
   void initState() {
@@ -101,10 +106,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 extremeColor = 0x88515BD4;
                                 themeText = amicalText;
                                 themeTitle = 'Amical';
+                                changeTextAnim();
                               });
                             },
                             scaleMinValue: 0.75,
-                            scaleCurve: Curves.easeInOut,
+                            scaleCurve: Curves.easeOut,
                             child: new Container( //AMICAL
                               height: 100,
                               width: 100,
@@ -137,10 +143,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 extremeColor = 0x88515BD4;
                                 themeText = romantiqueText;
                                 themeTitle = 'Romantique';
+                                changeTextAnim();
                               });
                             },
                             scaleMinValue: 0.75,
-                            scaleCurve: Curves.easeInOut,
+                            scaleCurve: Curves.easeOut,
                             child: new Container( //ROMANTIQUE
                               height: 100,
                               width: 100,
@@ -173,10 +180,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 extremeColor = 0x88515BD4;
                                 themeText = sportifText;
                                 themeTitle = 'Sportif';
+                                changeTextAnim();
                               });
                             },
                             scaleMinValue: 0.75,
-                            scaleCurve: Curves.easeInOut,
+                            scaleCurve: Curves.easeOut,
                             child: new Container( //SPORTIF
                               height: 100,
                               width: 100,
@@ -209,10 +217,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 extremeColor = 0xFF515BD4;
                                 themeText = extremeText;
                                 themeTitle = 'Extrême';
+                                changeTextAnim();
                               });
                             },
                             scaleMinValue: 0.75,
-                            scaleCurve: Curves.easeInOut,
+                            scaleCurve: Curves.easeOut,
                             child: new Container( //EXTREME
                               height: 100,
                               width: 100,
@@ -248,14 +257,24 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     children: <Widget>[
                       new Container(
                         margin: EdgeInsets.all(30.0),
-                        child: new Text(themeTitle,
-                          style: TextStyle(
-                            fontFamily: 'Lobster',
-                            //fontWeight: FontWeight.bold,
-                            fontSize: 49,
+                        child: AnimatedDefaultTextStyle(
+                          child: Text(themeTitleToApply),
+                            style: transparentText ? TextStyle(
+                              color: Color(0x00000000),
+                              fontFamily: 'Lobster',
+                              fontSize: 49,
+                            ) : TextStyle(
+                              color: Color(0xFF000000),
+                              fontFamily: 'Lobster',
+                              fontSize: 49,
+                            ),
+                              duration: Duration(milliseconds: 100),
+                              onEnd: (){
+                                themeTitleToApply = themeTitle;
+                                transparentText = false;
+                                },
                           ),
                         ),
-                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Container(
@@ -267,16 +286,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       new Container(
                           margin: EdgeInsets.only(
                               left: 30, top: 50, right: 30, bottom: 50),
-                          child: new Text(
-                            themeText,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Lobster',
-                              //fontWeight: FontWeight.bold,
-                              fontSize: 40,
+                          child: AnimatedDefaultTextStyle(
+                            child: Text(themeTextToApply),
+                              style: transparentText ? TextStyle(
+                                color: Color(0x00000000),
+                                fontFamily: 'Lobster',
+                                fontSize: 40,
+                              ) : TextStyle(
+                                color: Color(0xFF000000),
+                                fontFamily: 'Lobster',
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 40,
+                              ),
+                            duration: Duration(milliseconds: 100),
+                            onEnd: (){
+                              themeTextToApply = themeText;
+                              transparentText = false;
+                            },
                             ),
-                          )
-                      ),
+                          ),
                     ],
                   ),
                 ),
@@ -321,6 +349,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
         ),
       );
+    }
+    void changeTextAnim(){
+    if (themeTitle != themeTitleToApply){
+    transparentText = true;
+    }
+    else
+      return null;
     }
 
 
